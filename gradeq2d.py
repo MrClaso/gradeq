@@ -14,9 +14,8 @@ def grad(a, r):
 
 # function to calculate the multiplicator gamma
 def gamma(a, r):
-    rtr = np.sqrt(np.matmul(np.transpose(r),r))
-    return rtr**3/np.matmul(np.transpose(r),np.matmul(a, r))
-
+    rtr = np.matmul(np.transpose(r),r)
+    return -1/2.0*rtr/np.matmul(np.transpose(r),np.matmul(a, np.matmul(np.transpose(a),r)))
 
 ax = plt.figure().add_subplot(projection='3d')
 # Customize the axis.
@@ -43,18 +42,19 @@ a = np.array([[2.0, 1.0],
 b = np.array([4.0, 5.0])
 
 # initial guess
-x = 1.0*np.array([4, 5])
+x = 1.0*np.array([0,0])
 
-for i in range(12):
+for i in range(16):
     r = np.matmul(a, x) - b
     
     gradienten = grad(a, r)
-    g = gamma(a, r)*gradienten/magnitude(gradienten)
+    gam = gamma(a, r)
+    g = gam*gradienten
 
     # draw vectors
-    ax.quiver(x[0], x[1], 0, -g[0], -g[1], 0, length=1, color = 'r')
+    ax.quiver(x[0], x[1], 0, g[0], g[1], 0, length=1, color = 'r')
 
-    x -= g
+    x += g
 
     print("x = ", x)
 

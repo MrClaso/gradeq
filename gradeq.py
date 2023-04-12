@@ -11,8 +11,8 @@ def grad(a, r):
 
 # function to calculate the multiplicator gamma
 def gamma(a, r):
-    rtr = np.sqrt(np.matmul(np.transpose(r),r))
-    return rtr**3/np.matmul(np.transpose(r),np.matmul(a, r))
+    rtr = np.matmul(np.transpose(r),r)
+    return -1/2.0*rtr/np.matmul(np.transpose(r),np.matmul(a, np.matmul(np.transpose(a),r)))
 
 # Read the vector, b and matrix, a from file. 
 # Elements seperated by space. 
@@ -35,13 +35,16 @@ print(b)
 print(a)
 
 # initial guess
-x = 1.0*np.array([100, 100])
+x = 1.0*np.array([10, 10, 10, 10, 10])
 
-for i in range(10):
+for i in range(1000):
     r = np.matmul(a, x) - b
     
     gradienten = grad(a, r)
+    gam = gamma(a, r)
+    print(gam)
+    g = gam*gradienten
 
-    x -= gamma(a, r)*gradienten/magnitude(gradienten)
+    x += g
 
     print(x)
