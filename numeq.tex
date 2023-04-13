@@ -239,21 +239,20 @@ value encountered in scalar divide
 \newpage
 Jag vill se om jag kan lista ut ett eget värde på $\gamma$. När jag såg att kom direkt
 till lösningen vid lämpligt vald startpunkt började jag fundera på om jag kan utgå från det.
-
 Låt $\mathbf{x}_1$ vara en punkt sådan att, $-\nabla f(\mathbf{x}_1)$ pekar i riktning mot lösningen $\mathbf{x_2}$. 
-Då får jag följande relationer från (2), (3) och ur figur.
-\begin{tikzpicture}
-\draw[-to]   (-1,0) -- (5, 0);
-\draw[-to]   (0,-1) -- (0,5);
 
-\node[above right=1pt, outer sep=1pt,fill=white] (x1) at (2,4) {$\mathbf{x_1}$};
+\begin{tikzpicture}
+\draw[-to]   (-0.2, 0) -- (5, 0);
+\draw[-to]   (0, -0.2) -- (0, 4);
+
+\node[above right=1pt, outer sep=1pt,fill=white] (x1) at (2.6, 3.1) {$\mathbf{x_1}$};
 %\node[] (x_1) at (2, 4) {$\mathbf{x_1}$};
-\node[above right=1pt, outer sep=1pt,fill=white] (x2) at (1, 5) {$\nabla f$};
+\node[above right=1pt, outer sep=1pt,fill=white] (x2) at (2, 3.5) {$\nabla f$};
 \node[above right=1pt, outer sep=1pt,fill=white] (x3) at (4, 1) {$\mathbf{x_2}$};
 \node[above right=1pt, outer sep=1pt,fill=white] (x4) at (3.5, 1.4) {$\mathbf{g}$};
-\coordinate (x_1) at (2, 4);
+\coordinate (x_1) at (2.6, 3.1);
 \coordinate (x_2) at (4, 1);
-\coordinate (x_3) at (1, 5.5);
+\coordinate (x_3) at (2, 4);
 
 \filldraw (x_1) circle[radius = 1pt, fill=black];
 \filldraw (4.015, 0.99) circle[radius = 1pt, fill=black];
@@ -261,12 +260,15 @@ Då får jag följande relationer från (2), (3) och ur figur.
 \draw[-latex] (x_1) -- (x_2);
 \draw[-latex] (x_1) -- (x_3);
 
-\draw[blue] (0.3, 3.5) arc (150:100:8.4);
-\draw[blue] (0.3, 2.8) arc (150:95:7.6);
-\draw[blue] (0.5, 2.2) arc (145:90:7);
-\draw[blue] (0.9, 1.6) arc (142:85:5.5);
-\draw[blue] (1.5, 1) arc (145:80:3);
+\draw[blue] (0.3, 3.8) arc (105:95:22);
+\draw[blue] (0.3, 3.4) arc (111:90:12);
+\draw[blue] (0.5, 2.7) arc (125:90:7);
+\draw[blue] (0.9, 1.6) arc (142:100:5.5);
+\draw[blue] (1.5, 0.5) arc (160:90:3.5);
+\draw[blue] (2.8, 0.5) arc (170:80:1.4);
 \end{tikzpicture}   
+
+Då får jag följande relationer från (2), (3) och ur figur.
 
 \begin{gather*}
     \mathbf{g} = \gamma \nabla f = 2 \gamma \mathbf{A}^\intercal \mathbf{r}\\
