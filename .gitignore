@@ -4,6 +4,7 @@
 *.aux
 *.fdb_latexmk
 *.gz
+*.fls
 
 # ignore ALL files in ANY directory named temp
 temp/
