@@ -35,9 +35,9 @@ print(b)
 print(a)
 
 # initial guess
-x = 1.0*np.array([10, 10, 10, 10, 10])
+x = 1.0*np.array([0, 0, 0, 0, 0])
 
-for i in range(1000):
+for i in range(50):
     r = np.matmul(a, x) - b
     
     gradienten = grad(a, r)

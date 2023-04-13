@@ -4,7 +4,7 @@
 \usepackage{tikz}
 \title{Lösa ekvationssystem numeriskt med gradientmetod???}
 \author{Clas Östman}
-\date{mars 2023}
+\date{april 2023}
 \begin{document}
    \maketitle
    Lös ekvationssystemet,
@@ -15,9 +15,9 @@ där $\mathbf{A}$ är en känd $n\times n$ matris och $\mathbf{b}$ är en känd 
 vektor
 Låt $\mathbf{\tilde{x} }$ vara en gissning på lösningen.
 Sätt residualen $\mathbf{r}$ till,
-\begin{equation}
+\begin{equation*}
     \mathbf{r} = \mathbf{A\tilde{x}} - \mathbf{b}
-\end{equation}
+\end{equation*}
 När $\mathbf{r}$ går mot $\mathbf{0}$ går  $\mathbf{\tilde{x} }$ mot lösningen.
 Det är det samma som att beloppet av $\mathbf{r}$ går mot $0$ och därmed att 
 $\mathbf{r}^\intercal\mathbf{r}$
@@ -31,17 +31,17 @@ där $f = 0$ eller åtminstone tillräckligt nära $0$.
 \begin{equation}
     \mathbf{r} =  \mathbf{Ax} - \mathbf{b}
 \end{equation}
-\begin{equation}
+\begin{equation*}
     \mathbf{A} = \begin{bmatrix}
         a_{11} & a_{12} & \cdots & a_{1n} \\
         a_{21} & a_{22} & \cdots & a_{2n} \\
         \vdots  & \vdots  & \ddots & \vdots  \\
         a_{n1} & a_{n2} & \cdots & a_{nn} 
     \end{bmatrix}      
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     r_i =\sum_{j = 1}^{n}  a_{ij}x_j - b_i
-\end{equation}
+\end{equation*}
 \begin{multline*}
     f = \mathbf{r}^\intercal\mathbf{r} = \sum_{i=1}^{n}  r_i^2 = \\
     = (a_{11}x_1 + a_{12}x_2 + \cdots +a_{1n}x_n  - b_1)(a_{11}x_1 + a_{12}x_2 + \cdots
@@ -72,7 +72,7 @@ där $f = 0$ eller åtminstone tillräckligt nära $0$.
     f_{x_i} = \frac{\partial f}{\partial  x_i} = \\
     =2 \sum_{j=1}^{n} a_{ji}^2 x_i + 2 \sum_{j=1}^{n} 
     \sum_{k = 1, k \ne i}^{n}a_{ji}a_{jk} x_k
-    - 2 \sum_{j=1}^{n} a_{ji} b_j \\
+    - 2 \sum_{j=1}^{n} a_{ji} b_j =\\
     = 2 \sum_{j=1}^{n} a_{ji} \left( \sum_{k = 1}^{n} a_{jk} x_k - b_j \right)    
 \end{gather*}
 
@@ -92,9 +92,9 @@ Istället för att beskriva gradienten med den jobbiga summan kan man skriva,
 Nu har jag riktningen jag ska gå i men hur stora kliv ska jag ta?
 Jag definierar $\gamma$ som den faktor som multipliceras med den normaliserade
  gradienten för att, förhoppningsvis, komma närmare lösningen.
-\begin{equation*}
+\begin{equation}
     \gamma = \frac{(\mathbf{r}^\intercal\mathbf{r})^{3/2}}{\mathbf{r}^\intercal\mathbf{A}\mathbf{r}}
-\end{equation*}
+\end{equation}
 Då kan jag iterera mig fram till lösningen på följande vis:
 \begin{gather*}
     \mathbf{x}_0 = \mathbf{\tilde{x} }
@@ -104,9 +104,9 @@ Repetera:
     \mathbf{r} = \mathbf{A}\mathbf{x}_i - \mathbf{b}
 \end{equation*}
 
-    Beräkna $\gamma $
+    Beräkna $\gamma $ enligt (4)
 
-    Beräkna $\nabla f$
+    Beräkna $\nabla f$ enligt (3)
 \begin{gather*}
         \mathbf{x}_{i+1} = \mathbf{x}_i - \gamma \frac{\nabla f}{\left\lvert \nabla f\right\rvert } 
 \end{gather*}
@@ -241,7 +241,7 @@ Jag vill se om jag kan lista ut ett eget värde på $\gamma$. När jag såg att 
 till lösningen vid lämpligt vald startpunkt började jag fundera på om jag kan utgå från det.
 
 Låt $\mathbf{x}_1$ vara en punkt sådan att, $-\nabla f(\mathbf{x}_1)$ pekar i riktning mot lösningen $\mathbf{x_2}$. 
-Då får jag följande relationer.
+Då får jag följande relationer från (2), (3) och ur figur.
 \begin{tikzpicture}
 \draw[-to]   (-1,0) -- (5, 0);
 \draw[-to]   (0,-1) -- (0,5);
@@ -280,10 +280,12 @@ Då får jag följande relationer.
     2 \gamma \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{r} = \mathbf{0}
 \end{gather*}
 För att få en skalär multiplicerar jag med $\mathbf{r}^\intercal$.
-\begin{gather*}
+\begin{equation*}
     2 \gamma \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{r}^\intercal \mathbf{r} = \mathbf{0} \\
+\end{equation*}
+\begin{equation}
     \gamma = - \frac{\mathbf{r}^\intercal \mathbf{r}}{2 \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r}}
-\end{gather*}
+\end{equation}
 Se där, ett egenproducerat värde på $\gamma$! Nya tester visar att det fungerar.
 \newpage
 Nu ser iterationsschemat lite annorlunda ut.
@@ -296,9 +298,9 @@ Repetera:
     \mathbf{r} = \mathbf{A}\mathbf{x}_i - \mathbf{b}
 \end{equation*}
 
-    Beräkna $\gamma $
+    Beräkna $\gamma $ enligt (5)
 
-    Beräkna $\nabla f$
+    Beräkna $\nabla f$ enligt (3)
 \begin{gather*}
         \mathbf{x}_{i+1} = \mathbf{x}_i + \gamma \nabla f 
 \end{gather*}
