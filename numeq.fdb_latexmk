@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1681332642 "/Users/clasostman/Project/gradeq/numeq.tex" "numeq.pdf" "numeq" 1681332642 0
-  "/Users/clasostman/Project/gradeq/numeq.tex" 1681332641 10041 3486096f8c4c8a3cc4a929c881441d62 ""
+["pdflatex"] 1681374473 "/Users/clasostman/Project/gradeq/numeq.tex" "numeq.pdf" "numeq" 1681374473 0
+  "/Users/clasostman/Project/gradeq/numeq.tex" 1681374472 10399 2c0a7f46d145b7a9832345d29f7f18a4 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1246382020 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -138,8 +138,8 @@
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
   "exempel.png" 1681031799 400625 2b55c7fbc5dd0aaab8f9003d65182f96 ""
   "exempel_2.png" 1681033588 417841 ac94b521af3e70c6267361fdc7694513 ""
-  "numeq.aux" 1681332642 32 4d1825978335c8847f72f7c473f9edc8 "pdflatex"
-  "numeq.tex" 1681332641 10041 3486096f8c4c8a3cc4a929c881441d62 ""
+  "numeq.aux" 1681374473 32 f852561997c05a7d986acd1deeb530ec "pdflatex"
+  "numeq.tex" 1681374472 10399 2c0a7f46d145b7a9832345d29f7f18a4 ""
   (generated)
   "numeq.aux"
   "numeq.log"

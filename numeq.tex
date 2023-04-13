@@ -284,6 +284,23 @@ För att få en skalär multiplicerar jag med $\mathbf{r}^\intercal$.
     2 \gamma \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{r}^\intercal \mathbf{r} = \mathbf{0} \\
     \gamma = - \frac{\mathbf{r}^\intercal \mathbf{r}}{2 \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r}}
 \end{gather*}
-Se där, ett egenproducerat värde på $\gamma$. Nya tester visar att det fungerar.
-\end{document}
+Se där, ett egenproducerat värde på $\gamma$! Nya tester visar att det fungerar.
+\newpage
+Nu ser iterationsschemat lite annorlunda ut.
 
+\begin{gather*}
+    \mathbf{x}_0 = \mathbf{\tilde{x} }
+\end{gather*}
+Repetera:
+\begin{equation*}
+    \mathbf{r} = \mathbf{A}\mathbf{x}_i - \mathbf{b}
+\end{equation*}
+
+    Beräkna $\gamma $
+
+    Beräkna $\nabla f$
+\begin{gather*}
+        \mathbf{x}_{i+1} = \mathbf{x}_i + \gamma \nabla f 
+\end{gather*}
+
+\end{document}
