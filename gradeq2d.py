@@ -13,9 +13,8 @@ def grad(a, r):
     return 2*np.matmul(np.transpose(a), r)
 
 # function to calculate the multiplicator gamma
-def gamma(a, r):
-    rtr = np.matmul(np.transpose(r),r)
-    return -1/2.0*rtr/np.matmul(np.transpose(r),np.matmul(a, np.matmul(np.transpose(a),r)))
+def gamma(M, r):
+    return -1/2.0*np.matmul(np.transpose(r),r)/np.matmul(np.transpose(r),np.matmul(M,r))
 
 ax = plt.figure().add_subplot(projection='3d')
 # Customize the axis.
@@ -36,13 +35,15 @@ surf = ax.plot_surface(x, y, z, alpha = 0.02)
 CS = ax.contour(x, y, z, 100)
 ax.clabel(CS, inline=True, fontsize=10)
 
-a = np.array([[2.0, 1.0],
-              [1.0,2.0]])
+a = 1.0*np.array([[2, 1],
+                  [1,2]])
 
-b = np.array([4.0, 5.0])
+b = 1.0*np.array([1, 5])
 
 # initial guess
-x = 1.0*np.array([0,0])
+x = 1.0*np.array([0, 0])
+
+M = np.matmul(a, np.transpose(a))
 
 for i in range(16):
     r = np.matmul(a, x) - b

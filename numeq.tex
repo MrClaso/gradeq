@@ -90,13 +90,68 @@ Istället för att beskriva gradienten med den jobbiga summan kan man skriva,
     \nabla f = 2 \mathbf{A}^\intercal (\mathbf{A} \mathbf{x} - \mathbf{b}) =  2 \mathbf{A}^\intercal \mathbf{r}  
 \end{equation}
 Nu har jag riktningen jag ska gå i men hur stora kliv ska jag ta?
-Jag definierar $\gamma$ som den faktor som multipliceras med den normaliserade
- gradienten för att, förhoppningsvis, komma närmare lösningen.
-\begin{equation}
-    \gamma = \frac{(\mathbf{r}^\intercal\mathbf{r})^{3/2}}{\mathbf{r}^\intercal\mathbf{A}\mathbf{r}}
-\end{equation}
-Då kan jag iterera mig fram till lösningen på följande vis:
+Jag definierar $\gamma$ som den faktor som multipliceras med 
+gradienten för att, förhoppningsvis, komma närmare lösningen.
+\newpage
+Jag vill se om jag kan lista ut ett värde på $\gamma$.
+Låt $\mathbf{x}_1$ vara en punkt sådan att, $-\nabla f(\mathbf{x}_1)$ pekar i riktning mot lösningen $\mathbf{x_2}$. 
+$\mathbf{g}$ är vektorn från $\mathbf{x}_1$ till $\mathbf{x}_2$
+\begin{tikzpicture}
+\draw[-to]   (-0.2, 0) -- (5, 0);
+\draw[-to]   (0, -0.2) -- (0, 4);
+ 
+\node[above right=1pt, outer sep=1pt,fill=white] (x1) at (2.6, 3.1) {$\mathbf{x_1}$};
+%\node[] (x_1) at (2, 4) {$\mathbf{x_1}$};
+\node[above right=1pt, outer sep=1pt,fill=white] (x2) at (2, 3.5) {$\nabla f$};
+\node[above right=1pt, outer sep=1pt,fill=white] (x3) at (4, 1) {$\mathbf{x_2}$};
+\node[above right=1pt, outer sep=1pt,fill=white] (x4) at (3.5, 1.4) {$\mathbf{g}$};
+\coordinate (x_1) at (2.6, 3.1);
+\coordinate (x_2) at (4, 1);
+\coordinate (x_3) at (2, 4);
+
+\filldraw (x_1) circle[radius = 1pt, fill=black];
+\filldraw (4.015, 0.99) circle[radius = 1pt, fill=black];
+ 
+\draw[-latex] (x_1) -- (x_2);
+\draw[-latex] (x_1) -- (x_3);
+ 
+\draw[blue] (0.3, 3.8) arc (105:95:22);
+\draw[blue] (0.3, 3.4) arc (111:90:12);
+\draw[blue] (0.5, 2.7) arc (125:90:7);
+\draw[blue] (0.9, 1.6) arc (142:100:5.5);
+\draw[blue] (1.5, 0.5) arc (160:90:3.5);
+\draw[blue] (2.8, 0.5) arc (170:80:1.4);
+\end{tikzpicture}   
+ 
+Då får jag följande relationer från (2), (3) och ur figur.
+ 
 \begin{gather*}
+     \mathbf{g} = \gamma \nabla f = 2 \gamma \mathbf{A}^\intercal \mathbf{r}\\
+     \mathbf{x}_2 - \mathbf{g} - \mathbf{x}_1 = \mathbf{0} \\ 
+     \mathbf{x}_2 = \mathbf{g} + \mathbf{x}_1 \\
+     \mathbf{r} = \mathbf{Ax}_1 - \mathbf{b}  \\
+     \mathbf{r}_2 = \mathbf{Ax}_2 - \mathbf{b} = \mathbf{0} \\
+     \mathbf{r}_2 = \mathbf{A}(\mathbf{g} + \mathbf{x}_1) - \mathbf{b} =
+     \mathbf{A}(2 \gamma \mathbf{A}^\intercal \mathbf{r} + \mathbf{x}_1) - \mathbf{b} = \\
+     = 2 \gamma \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{A} \mathbf{x}_1 - \mathbf{b} = 
+     2 \gamma \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{r} = \mathbf{0}
+ \end{gather*}
+ För att få en skalär multiplicerar jag med $\mathbf{r}^\intercal$.
+ \begin{equation*}
+     2 \gamma \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{r}^\intercal \mathbf{r} = \mathbf{0} \\
+ \end{equation*}
+ \begin{equation}
+     \gamma = - \frac{\mathbf{r}^\intercal \mathbf{r}}{2 \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r}}
+ \end{equation}
+ Se där, ett egenproducerat värde på $\gamma$! För att minska på antalet beräkningar räknar jag ut
+ $\mathbf{A}\mathbf{A}^\intercal$ en gång för alla och sätter $\mathbf{M}=\mathbf{A}\mathbf{A}^\intercal$.
+ \begin{equation}
+     \gamma = - \frac{\mathbf{r}^\intercal \mathbf{r}}{2 \mathbf{r}^\intercal \mathbf{M} \mathbf{r}}
+ \end{equation}
+ Då kan jag iterera mig fram till lösningen på följande vis:
+
+ \begin{gather*}
+    \mathbf{M}=\mathbf{A}\mathbf{A}^\intercal\\
     \mathbf{x}_0 = \mathbf{\tilde{x} }
 \end{gather*}
 Repetera:
@@ -104,14 +159,82 @@ Repetera:
     \mathbf{r} = \mathbf{A}\mathbf{x}_i - \mathbf{b}
 \end{equation*}
 
-    Beräkna $\gamma $ enligt (4)
+    Beräkna $\gamma $ enligt (5)
 
     Beräkna $\nabla f$ enligt (3)
 \begin{gather*}
-        \mathbf{x}_{i+1} = \mathbf{x}_i - \gamma \frac{\nabla f}{\left\lvert \nabla f\right\rvert } 
+        \mathbf{x}_{i+1} = \mathbf{x}_i + \gamma \nabla f 
 \end{gather*}
 
-
+\newpage
+Testar med ett 2-dimensionellt exempel.
+\begin{gather*}
+    \mathbf{A} = \left(
+    \begin{matrix}
+        2 & 1 \\
+        1 & 2
+    \end{matrix}
+    \right),
+    \mathbf{b}=\left(
+    \begin{matrix}
+        4 \\
+        5
+    \end{matrix}
+    \right),
+    \mathbf{x}_0=\left(
+    \begin{matrix}
+        3 \\
+        4
+    \end{matrix}
+    \right)\\
+    \mathbf{M} = \left(
+    \begin{matrix}
+        5 & 4 \\
+        4 & 5
+    \end{matrix}
+    \right)\\
+    \mathbf{r}=\mathbf{A}\mathbf{x}_0-\mathbf{b} = \left(
+    \begin{matrix}
+        6 \\
+        6
+    \end{matrix}
+    \right)\\
+    \gamma = - \frac{\mathbf{r}^\intercal \mathbf{r}}{2 \mathbf{r}^\intercal \mathbf{M} \mathbf{r}} = -\frac{72}{1296} = -\frac{1}{18}\\
+    \nabla f = 2 \mathbf{A}^\intercal \mathbf{r} = \left(
+    \begin{matrix}
+        36 \\
+        36
+    \end{matrix}
+    \right)\\
+    \mathbf{x}_1 = \mathbf{x}_0 + \gamma \nabla f = \left(
+    \begin{matrix}
+        3 \\
+        4
+    \end{matrix}
+    \right)
+    + -\frac{1}{18} \left(
+    \begin{matrix}
+        36 \\
+        36
+    \end{matrix}
+    \right) = \left(
+    \begin{matrix}
+        3 \\
+        4
+    \end{matrix}
+    \right) - \left(
+    \begin{matrix}
+        2 \\
+        2
+    \end{matrix}
+    \right) = \left(
+    \begin{matrix}
+        1 \\
+        2
+    \end{matrix}
+    \right)
+\end{gather*}
+Vilket är lösningen.
 \newpage
 Ett 2-dimensionellt exempel med lösningen, $x_1 = 1, x_2 = 2$.
 \begin{equation*}
@@ -145,8 +268,7 @@ Ett 2-dimensionellt exempel med lösningen, $x_1 = 1, x_2 = 2$.
     
     # function definition to compute magnitude of a vector
     def magnitude(vector):
-        return np.sqrt(sum(pow(element, 2) for 
-        element in vector))
+        return np.sqrt(sum(pow(element, 2) for element in vector))
     
     def fun(x, y):
         return 5*x**2 + 5*y**2 + 8*x*y - 26*x - 28 *y + 41
@@ -156,11 +278,10 @@ Ett 2-dimensionellt exempel med lösningen, $x_1 = 1, x_2 = 2$.
         return 2*np.matmul(np.transpose(a), r)
     
     # function to calculate the multiplicator gamma
-    def gamma(a, r):
-        rtr = np.sqrt(np.matmul(np.transpose(r),r))
-        return rtr**3/np.matmul(np.transpose(r),np.matmul(a, r))
-        
-    #Plot setup
+    def gamma(M, r):
+        return -1/2.0*np.matmul(np.transpose(r),r)/
+                np.matmul(np.transpose(r),np.matmul(M,r))
+    
     ax = plt.figure().add_subplot(projection='3d')
     # Customize the axis.
     ax.set_xlim(-1, 5)
@@ -180,26 +301,29 @@ Ett 2-dimensionellt exempel med lösningen, $x_1 = 1, x_2 = 2$.
     CS = ax.contour(x, y, z, 100)
     ax.clabel(CS, inline=True, fontsize=10)
     
-    #Define the arrays
     a = 1.0*np.array([[2, 1],
                       [1, 2]])
     
-    b = 1.0*np.array([4, 5])
-
+    b = 1.0*np.array([1, 5])
     
     # initial guess
-    x = 1.0*np.array([1, 5])
+    x = 1.0*np.array([0, 0])
     
-    for i in range(12):
+    M = np.matmul(a, np.transpose(a))
+    
+    for i in range(16):
         r = np.matmul(a, x) - b
+        
         gradienten = grad(a, r)
-        g = gamma(a, r)*gradienten/magnitude(gradienten)
+        gam = gamma(a, r)
+        g = gam*gradienten
     
         # draw vectors
-        ax.quiver(x[0], x[1], 0, -g[0], -g[1], 0,
+        ax.quiver(x[0], x[1], 0, g[0], g[1], 0, 
                   length=1, color = 'r')
     
-        x -= g
+        x += g
+    
         print("x = ", x)
     
     plt.show()
@@ -219,92 +343,4 @@ x =  [1.00408531 2.02433466]
 x =  [0.99018339 2.00804235]
 x =  [1.00149442 2.00741015]
 \end{verbatim}
-\newpage
-\begin{figure}
-    \includegraphics[width=\textwidth]{exempel_2.png}
-\end{figure}
-Om jag har tur med startgissningen hittas lösningen med bara en iteration!! 
-Måste betyda att jag hittat rätt i beräknandet av faktorn $\gamma$.
-Tyvärr kan jag inte ta åt mig äran av den uträkningen. Hittade en formel
-som jag modifierade lite.
-
-Output:
-\begin{verbatim}
-x =  [1. 2.]
-x =  [1. 2.]
-/Users/clasostman/misc/gradeq2d.py:18: RuntimeWarning: invalid 
-value encountered in scalar divide
-  return rtr**3/np.matmul(np.transpose(r),np.matmul(a, r))
-\end{verbatim}
-\newpage
-Jag vill se om jag kan lista ut ett eget värde på $\gamma$. När jag såg att kom direkt
-till lösningen vid lämpligt vald startpunkt började jag fundera på om jag kan utgå från det.
-Låt $\mathbf{x}_1$ vara en punkt sådan att, $-\nabla f(\mathbf{x}_1)$ pekar i riktning mot lösningen $\mathbf{x_2}$. 
-
-\begin{tikzpicture}
-\draw[-to]   (-0.2, 0) -- (5, 0);
-\draw[-to]   (0, -0.2) -- (0, 4);
-
-\node[above right=1pt, outer sep=1pt,fill=white] (x1) at (2.6, 3.1) {$\mathbf{x_1}$};
-%\node[] (x_1) at (2, 4) {$\mathbf{x_1}$};
-\node[above right=1pt, outer sep=1pt,fill=white] (x2) at (2, 3.5) {$\nabla f$};
-\node[above right=1pt, outer sep=1pt,fill=white] (x3) at (4, 1) {$\mathbf{x_2}$};
-\node[above right=1pt, outer sep=1pt,fill=white] (x4) at (3.5, 1.4) {$\mathbf{g}$};
-\coordinate (x_1) at (2.6, 3.1);
-\coordinate (x_2) at (4, 1);
-\coordinate (x_3) at (2, 4);
-
-\filldraw (x_1) circle[radius = 1pt, fill=black];
-\filldraw (4.015, 0.99) circle[radius = 1pt, fill=black];
-
-\draw[-latex] (x_1) -- (x_2);
-\draw[-latex] (x_1) -- (x_3);
-
-\draw[blue] (0.3, 3.8) arc (105:95:22);
-\draw[blue] (0.3, 3.4) arc (111:90:12);
-\draw[blue] (0.5, 2.7) arc (125:90:7);
-\draw[blue] (0.9, 1.6) arc (142:100:5.5);
-\draw[blue] (1.5, 0.5) arc (160:90:3.5);
-\draw[blue] (2.8, 0.5) arc (170:80:1.4);
-\end{tikzpicture}   
-
-Då får jag följande relationer från (2), (3) och ur figur.
-
-\begin{gather*}
-    \mathbf{g} = \gamma \nabla f = 2 \gamma \mathbf{A}^\intercal \mathbf{r}\\
-    \mathbf{x}_2 - \mathbf{g} - \mathbf{x}_1 = \mathbf{0} \\ 
-    \mathbf{x}_2 = \mathbf{g} + \mathbf{x}_1 \\
-    \mathbf{r} = \mathbf{Ax}_1 - \mathbf{b}  \\
-    \mathbf{r}_2 = \mathbf{Ax}_2 - \mathbf{b} = \mathbf{0} \\
-    \mathbf{r}_2 = \mathbf{A}(\mathbf{g} + \mathbf{x}_1) - \mathbf{b} =
-    \mathbf{A}(2 \gamma \mathbf{A}^\intercal \mathbf{r} + \mathbf{x}_1) - \mathbf{b} = \\
-    = 2 \gamma \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{A} \mathbf{x}_1 - \mathbf{b} = 
-    2 \gamma \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{r} = \mathbf{0}
-\end{gather*}
-För att få en skalär multiplicerar jag med $\mathbf{r}^\intercal$.
-\begin{equation*}
-    2 \gamma \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r} + \mathbf{r}^\intercal \mathbf{r} = \mathbf{0} \\
-\end{equation*}
-\begin{equation}
-    \gamma = - \frac{\mathbf{r}^\intercal \mathbf{r}}{2 \mathbf{r}^\intercal \mathbf{A} \mathbf{A}^\intercal \mathbf{r}}
-\end{equation}
-Se där, ett egenproducerat värde på $\gamma$! Nya tester visar att det fungerar.
-\newpage
-Nu ser iterationsschemat lite annorlunda ut.
-
-\begin{gather*}
-    \mathbf{x}_0 = \mathbf{\tilde{x} }
-\end{gather*}
-Repetera:
-\begin{equation*}
-    \mathbf{r} = \mathbf{A}\mathbf{x}_i - \mathbf{b}
-\end{equation*}
-
-    Beräkna $\gamma $ enligt (5)
-
-    Beräkna $\nabla f$ enligt (3)
-\begin{gather*}
-        \mathbf{x}_{i+1} = \mathbf{x}_i + \gamma \nabla f 
-\end{gather*}
-
 \end{document}

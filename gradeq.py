@@ -10,9 +10,9 @@ def grad(a, r):
     return 2*np.matmul(np.transpose(a), r)
 
 # function to calculate the multiplicator gamma
-def gamma(a, r):
+def gamma(m, r):
     rtr = np.matmul(np.transpose(r),r)
-    return -1/2.0*rtr/np.matmul(np.transpose(r),np.matmul(a, np.matmul(np.transpose(a),r)))
+    return -1/2.0*rtr/np.matmul(np.transpose(r),np.matmul(m,r))
 
 # Read the vector, b and matrix, a from file. 
 # Elements seperated by space. 
@@ -30,21 +30,33 @@ with open(sys.argv[1], 'r') as f:
         for j in range(n):
             a[i, j] = int(a_string[j])
 
+x_string = input("Ge " + str(n) + " startvärden för x separerade med mellanslag :  ").split(' ')
+x = [0.0]*n
+
+for i in range(n):
+    x[i] = float(x_string[i])
+    
 print(b)
 
 print(a)
 
-# initial guess
-x = 1.0*np.array([0, 0, 0, 0, 0])
+m = np.matmul(a, np.transpose(a))
 
-for i in range(50):
-    r = np.matmul(a, x) - b
+r = np.matmul(a, x) - b
+
+i = 0
+while i < 1000 and magnitude(r) > 0.01:
     
     gradienten = grad(a, r)
-    gam = gamma(a, r)
+    gam = gamma(m, r)
     print(gam)
     g = gam*gradienten
 
     x += g
 
-    print(x)
+    r = np.matmul(a, x) - b
+    print("r = ",magnitude(r))
+    print("x = ", x)
+
+    i += 1
+print("Klart efter ", i , " iterationer")
