@@ -32,16 +32,16 @@ z = fun(x, y)
 #                       linewidth=0, antialiased=False)
 surf = ax.plot_surface(x, y, z, alpha = 0.02)
 
-CS = ax.contour(x, y, z, 100)
+CS = ax.contour(x, y, z, 300)
 ax.clabel(CS, inline=True, fontsize=10)
 
 a = 1.0*np.array([[2, 1],
-                  [1,2]])
+                  [1, 2]])
 
-b = 1.0*np.array([1, 5])
+b = 1.0*np.array([4, 5])
 
 # initial guess
-x = 1.0*np.array([0, 0])
+x = 1.0*np.array([5, 2])
 
 M = np.matmul(a, np.transpose(a))
 
@@ -49,7 +49,7 @@ for i in range(16):
     r = np.matmul(a, x) - b
     
     gradienten = grad(a, r)
-    gam = gamma(a, r)
+    gam = gamma(M, r)
     g = gam*gradienten
 
     # draw vectors

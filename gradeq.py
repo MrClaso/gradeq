@@ -43,11 +43,21 @@ print(a)
 m = np.matmul(a, np.transpose(a))
 
 r = np.matmul(a, x) - b
+v1 = [1.0]*n
+v2 = [1.0]*n
 
 i = 0
-while i < 1000 and magnitude(r) > 0.01:
+while i < 50 and magnitude(r) > 0.01:
     
     gradienten = grad(a, r)
+
+    if i%2 == 1:
+        print(i, " v1 = ", np.matmul(np.transpose(gradienten), v1)/(magnitude(gradienten)*magnitude(v1)))
+        v1 = gradienten
+    else:
+        print(i, " v2 = ", np.matmul(np.transpose(gradienten), v2)/(magnitude(gradienten)*magnitude(v2)))
+        v2 = gradienten
+
     gam = gamma(m, r)
     print(gam)
     g = gam*gradienten
